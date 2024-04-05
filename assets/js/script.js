@@ -34,6 +34,26 @@ const renderTaskList = () => {
         // else if done
     }
 
+    $(".draggable").draggable({
+        opacity: 0.7,
+        zIndex: 100,
+
+        helper: function(event) {
+            let original;
+         if($(event.target).hasClass("ui-draggable")) {
+            original = $(event.target);
+
+         } else {
+            original = $(event.target).closest(".ui-draggable");
+
+         }
+         return original.clone().css({
+            maxWidth: original.outerWidth(),
+         });
+        }
+
+    })
+
 }
 
 // Todo: create a function to handle adding a new task
@@ -54,5 +74,7 @@ const handleDrop = (event, ui) => {
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(() => {
     renderTaskList();
+
+    $("#taskForm").on("submit", handleAddTask);
 
 });
